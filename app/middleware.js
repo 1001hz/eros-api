@@ -1,6 +1,7 @@
 var bodyParser = require('body-parser');
 var express = require('express');
 var config = require('../config');
+var security = require('./security');
 var userService = require('./services/user.js');
 var path = require('path');
 
@@ -9,15 +10,15 @@ module.exports = function(app, apiRouter, openRouter){
     app.use(bodyParser.urlencoded({extended:true}));
     app.use(bodyParser.json());
     app.use(express.static(path.join(__dirname, '../public')));
-    app.use('/api', apiRouter);
-    app.use('/callback', openRouter);
+    app.use('/api/'+config.version, apiRouter);
+    //app.use('/callback', openRouter);
 
-    apiRouter.use('/api', function(req, res, next) {
-        next();
-    });
+    //apiRouter.use('/api/v1', function(req, res, next) {
+    //    next();
+    //});
 
     apiRouter.use(function(req, res, next) {
-        console.log(req.originalUrl);
+        //console.log(req.originalUrl);
 
         res.header("Access-Control-Allow-Origin", "http://localhost:3000");
         res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH');
@@ -34,16 +35,16 @@ module.exports = function(app, apiRouter, openRouter){
     // protect routes with token and pass user derived from token to next
     apiRouter.use(function(req, res, next) {
 
-        var isOpenRoute = false;
-        var openRoutes = config.openRoutes;
-        for(var i=0; i<openRoutes.length; i++){
-            if(req.originalUrl.substr(0,4) !== '/api' || (openRoutes[i].route === req.originalUrl && openRoutes[i].method === req.method)) {
-                isOpenRoute = true;
-                next();
+        var isSecureRoute = false;
+        var securePaths = security.secure;
+        for(var i=0; i<securePaths.length;i++) {
+            if('/api/'+config.version + securePaths[i].path === req.originalUrl){
+                isSecureRoute = true;
+                break;
             }
         }
 
-        if(!isOpenRoute) {
+        if(isSecureRoute) {
             var token = req.get('X-Auth-Token');
             if (token) {
                 userService
@@ -65,6 +66,10 @@ module.exports = function(app, apiRouter, openRouter){
                 res.status(401).send();
             }
         }
+        else {
+            next();
+        }
+
     });
 
     app.use(function(err, req, res, next) {

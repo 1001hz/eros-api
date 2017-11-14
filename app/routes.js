@@ -11,13 +11,6 @@ module.exports = function(router, openRouter){
         .route('/')
         .get(api.getMessage);
 
-    router
-        .route('/error')
-        .get(api.getError);
-
-    router
-        .route('/api')
-        .get(api.getMessage);
 
     /**
      * Auth Section
@@ -46,6 +39,12 @@ module.exports = function(router, openRouter){
     /**
      * User Section
      */
+
+    router
+        .route('/user')
+        .get(function(req, res, next){
+            res.status(200).send({});
+        });
 
     router
         .route('/user/:id')

@@ -1,14 +1,8 @@
+var config = require('../../config');
 module.exports = {
 
     getMessage: function(req, res){
-        res.send('API');
-    },
-
-    getError: function(req, res){
-        var error = new Error("The error message");
-        error.http_code = 404;
-        console.log(error);
-        res.status(500).json(error);
+        res.status(200).json({name: 'my app', version: config.version});
     }
 
 }

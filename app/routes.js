@@ -42,13 +42,7 @@ module.exports = function(router, openRouter){
 
     router
         .route('/user')
-        .get(function(req, res, next){
-            res.status(200).send({});
-        });
-
-    router
-        .route('/user/:id')
-        .get(user.findById);
+        .get(user.find);
 
     router
         .route('/user')

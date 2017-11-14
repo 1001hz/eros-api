@@ -40,6 +40,13 @@ module.exports = function(app, apiRouter, openRouter){
         for(var i=0; i<securePaths.length;i++) {
             if('/api/'+config.version + securePaths[i].path === req.originalUrl){
                 isSecureRoute = true;
+                if(securePaths[i].allow){
+                    for(var j=0; j<securePaths[i].allow.length; j++) {
+                        if(req.method === securePaths[i].allow[j]) {
+                            isSecureRoute = false;
+                        }
+                    }
+                }
                 break;
             }
         }

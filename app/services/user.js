@@ -5,11 +5,21 @@ var config = require('../../config');
 
 module.exports = {
 
+    /**
+     * Gets a user from the login token
+     * @param token
+     * @returns {*|ChildProcess|Array|{index: number, input: string}|Promise}
+     */
     getUserByToken: function(token) {
         return User.findOne({ token: token }).exec();
     },
 
 
+    /**
+     * Logs a user out by invalidating the token
+     * @param userId
+     * @returns {MPromise<User>}
+     */
     logout: function(userId) {
         return User
                 .findOne({ _id: userId })
@@ -20,6 +30,12 @@ module.exports = {
                 });
     },
 
+    /**
+     * Logs a user in by generating a new token
+     * @param email
+     * @param password
+     * @returns {MPromise<User>}
+     */
     login: function(email, password) {
         return User
             .findOne({ email: email })
@@ -41,6 +57,11 @@ module.exports = {
             });
     },
 
+    /**
+     * Logs a user in using an old token and generates a new token for future use
+     * @param token
+     * @returns {MPromise}
+     */
     tokenLogin: function(token) {
         console.log(token);
         return User
@@ -59,6 +80,12 @@ module.exports = {
             });
     },
 
+    /**
+     * Creates a new user
+     * @param email
+     * @param password
+     * @returns {MPromise<User>}
+     */
     create: function(email, password) {
         return User.findOne({ email: email })
                 .select('id')
@@ -90,7 +117,13 @@ module.exports = {
                 });
     },
 
+    /**
+     * Updates a user with only fields that have been passed in the user object
+     * @param user
+     * @returns {MPromise}
+     */
     update: function(user) {
+
         return User
             .findOne({ _id: user._id })
             .exec()
@@ -107,6 +140,13 @@ module.exports = {
             });
     },
 
+    /**
+     * Updates the user's password
+     * @param user
+     * @param currentPassword
+     * @param newPassword
+     * @returns {MPromise}
+     */
     updatePassword: function(user, currentPassword, newPassword) {
         return User
             .findOne({ _id: user._id })
@@ -123,16 +163,13 @@ module.exports = {
     },
 
 
-    updateSpotifyTokens: function(userId, accessToken, refreshToken) {
-        return User
-            .findOne({ _id: userId })
-            .exec()
-            .then(function(aUser){
-                aUser.mediaSource.push({ accessToken : accessToken, refreshToken: refreshToken, source: 'spotify'});
-                return aUser.save();
-            });
-    },
-
+    /**
+     * Updates the user's password using a token for validation
+     * @param token
+     * @param email
+     * @param newPassword
+     * @returns {Function|*|U}
+     */
     resetPassword: function(token, email, newPassword) {
         return new Promise(function(resolve, reject) {
             User
@@ -157,6 +194,11 @@ module.exports = {
         });
     },
 
+    /**
+     * Sends an email with a reset password token
+     * @param enteredEmail
+     * @returns {Function|*|U}
+     */
     forgotPassword: function(enteredEmail) {
         return new Promise(function(resolve, reject){
             User
@@ -181,6 +223,12 @@ module.exports = {
         });
     },
 
+    /**
+     * Updates the user's image
+     * @param req
+     * @param res
+     * @returns {Function|*|U}
+     */
     updateAvatar: function(req, res) {
 
         var fileName = null;
@@ -222,30 +270,5 @@ module.exports = {
                 });
             });
 
-    },
-
-    addLeague: function(userId, leagueId) {
-        return User
-            .findOne({_id: userId})
-            .exec()
-            .then(function (aUser) {
-                if (aUser) {
-                    aUser.leagues.push({leagueId : leagueId});
-                    return aUser.save();
-                }
-                else {
-                    throw({status: 422, message: "User doesn't exist"});
-                }
-            });
-    },
-
-    removeLeague: function(leagueId) {
-        return User
-            .update(
-            {'leagues.leagueId': {$eq: leagueId}},
-            {$pull : { "leagues" : {"leagueId":leagueId} } },
-            {multi: true}
-            )
-            .exec();
     }
 };

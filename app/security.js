@@ -1,5 +1,5 @@
 module.exports = {
     secure: [
-        { path:'/user' }
+        { path:'/user', allow:['POST'] }
     ]
 };

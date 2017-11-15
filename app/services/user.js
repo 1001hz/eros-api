@@ -11,6 +11,7 @@ module.exports = {
      * @returns {*|ChildProcess|Array|{index: number, input: string}|Promise}
      */
     getUserByToken: function(token) {
+        console.log(token);
         return User.findOne({ token: token }).exec();
     },
 

@@ -6,10 +6,10 @@ module.exports = {
     login: function(req, res, next){
 
         validator
-            .exists(req, ['username', 'password'])
+            .exists(req, ['email', 'password'])
             .then(function(){
                 userService
-                    .login(req.body.username, req.body.password)
+                    .login(req.body.email, req.body.password)
                     .then(function(user){
                         res.json(user);
                     })

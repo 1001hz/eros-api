@@ -20,7 +20,7 @@ module.exports = function(app, apiRouter, openRouter){
     apiRouter.use(function(req, res, next) {
         //console.log(req.originalUrl);
 
-        res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+        res.header("Access-Control-Allow-Origin", config.access.host + ':' + config.access.port);
         res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH');
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, X-Auth-Token");
 
@@ -57,6 +57,7 @@ module.exports = function(app, apiRouter, openRouter){
                 userService
                     .getUserByToken(token)
                     .then(function (user) {
+                        console.log(user);
                         if (user) {
                             req._user = user;
                             next();

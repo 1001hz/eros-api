@@ -11,11 +11,7 @@ module.exports = function(app, apiRouter, openRouter){
     app.use(bodyParser.json());
     app.use(express.static(path.join(__dirname, '../public')));
     app.use('/api/'+config.version, apiRouter);
-    //app.use('/callback', openRouter);
 
-    //apiRouter.use('/api/v1', function(req, res, next) {
-    //    next();
-    //});
 
     apiRouter.use(function(req, res, next) {
         //console.log(req.originalUrl);

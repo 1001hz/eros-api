@@ -1,6 +1,7 @@
 var api = require('./controllers/api');
 var user = require('./controllers/user');
 var auth = require('./controllers/auth');
+var wedding = require('./controllers/wedding');
 
 module.exports = function(router, openRouter){
 
@@ -66,17 +67,14 @@ module.exports = function(router, openRouter){
 
     router
         .route('/weddings')
-        .get(function(req, res, next){
-            res.status(200).send({ weddings: [
-                { _id: '1a2b3c',
-                    date: '2017-11-09T16:57:47+00:00',
-                    name: 'My wedding'
-                },
-                { _id: '9z8y7x',
-                    date: '2018-12-09T16:37:47+00:00',
-                    name: 'Sean Wedding'
-                }
-            ]})
-        })
+        .get(wedding.getAll);
+
+    router
+        .route('/weddings')
+        .post(wedding.create);
+
+    router
+        .route('/weddings')
+        .patch(wedding.update);
 
 }

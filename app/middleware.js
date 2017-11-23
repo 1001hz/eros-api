@@ -14,7 +14,6 @@ module.exports = function(app, apiRouter, openRouter){
 
 
     apiRouter.use(function(req, res, next) {
-        //console.log(req.originalUrl);
 
         res.header("Access-Control-Allow-Origin", config.access.host + ':' + config.access.port);
         res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH');
@@ -53,7 +52,7 @@ module.exports = function(app, apiRouter, openRouter){
                 userService
                     .getUserByToken(token)
                     .then(function (user) {
-                        console.log(user);
+
                         if (user) {
                             req._user = user;
                             next();

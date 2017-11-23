@@ -31,12 +31,39 @@ module.exports = {
             .findOne({ _id: wedding._id })
             .exec()
             .then(function(DbWedding){
+
                 if(DbWedding){
                     if(DbWedding.ownerId == userId){
+
                         var query = { _id: wedding._id };
                         var updateFields = DbWedding.updateFields(wedding);
                         var options = {new: true};
+
                         return Wedding.findOneAndUpdate(query, updateFields, options).exec();
+                    }
+                    else {
+                        throw({status: 401, message: "Wedding doesn't belong to this user"});
+                    }
+
+                }
+                else {
+                    throw({status: 422, message: "Wedding doesn't exist"});
+                }
+            });
+    },
+
+    remove: function(weddingId, userId) {
+
+        return Wedding
+            .findOne({ _id: weddingId })
+            .exec()
+            .then(function(DbWedding){
+
+                if(DbWedding){
+                    if(DbWedding.ownerId == userId){
+
+                        var query = { _id: weddingId };
+                        return Wedding.findByIdAndRemove(query).exec();
                     }
                     else {
                         throw({status: 401, message: "Wedding doesn't belong to this user"});

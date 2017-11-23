@@ -67,7 +67,26 @@ module.exports = {
             .catch(function(error){
                 next(error);
             });
+    },
 
+    remove: function(req, res, next){
 
+        validator
+            .exists(req, ['_id'])
+            .then(function(){
+
+                weddingService
+                    .remove(req.body._id, req._user._id)
+                    .then(function(wedding){
+                        res.json(wedding);
+                    })
+                    .catch(function(error){
+                        next(error);
+                    });
+
+            })
+            .catch(function(error){
+                next(error);
+            });
     }
 };

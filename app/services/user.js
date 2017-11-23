@@ -11,7 +11,6 @@ module.exports = {
      * @returns {*|ChildProcess|Array|{index: number, input: string}|Promise}
      */
     getUserByToken: function(token) {
-        console.log(token);
         return User.findOne({ token: token }).exec();
     },
 
@@ -64,7 +63,6 @@ module.exports = {
      * @returns {MPromise}
      */
     tokenLogin: function(token) {
-        console.log(token);
         return User
             .findOne({ token: token })
             .exec()

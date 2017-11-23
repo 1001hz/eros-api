@@ -77,4 +77,25 @@ module.exports = function(router, openRouter){
         .route('/weddings')
         .patch(wedding.update);
 
+    router
+        .route('/weddings')
+        .delete(wedding.remove);
+
+    /**
+     * Guests Section
+     */
+
+    router
+        .route('/weddings/:weddingId/guests')
+        .get(function(req, res) {
+            res.json([
+                {_id: '123123', firstName: 'John', lastName: 'Hughes'},
+                {_id: '123asd123', firstName: 'Jsadohn', lastName: 'Hugas'},
+                {_id: 'sdsddds', firstName: 'John', lastName: 'Hughes'},
+                {_id: '3e2e33e3', firstName: 'Jsadohn', lastName: 'Hugas'},
+                {_id: '4r4r4r4', firstName: 'John', lastName: 'Hughes'},
+                {_id: '44rdfsfwf', firstName: 'Jsadohn', lastName: 'Hugas'}
+            ]);
+        });
+
 }

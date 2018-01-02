@@ -2,7 +2,7 @@
   "name": "eros-api",
   "main": "server.js",
   "scripts": {
-    "start": "server.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "body-parser": "^1.14.2",

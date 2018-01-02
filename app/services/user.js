@@ -86,6 +86,7 @@ module.exports = {
      * @returns {MPromise<User>}
      */
     create: function(email, password) {
+
         return User.findOne({ email: email })
                 .select('id')
                 .exec()
@@ -121,14 +122,14 @@ module.exports = {
      * @param user
      * @returns {MPromise}
      */
-    update: function(user) {
+    update: function(user, userId) {
 
         return User
-            .findOne({ _id: user._id })
+            .findOne({ _id: userId })
             .exec()
             .then(function(aUser){
                 if(aUser){
-                    var query = { _id: user._id };
+                    var query = { _id: aUser._id };
                     var updateFields = aUser.updateFields(user);
                     var options = {new: true};
                     return User.findOneAndUpdate(query, updateFields, options).exec();

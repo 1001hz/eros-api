@@ -9,7 +9,7 @@ module.exports = function(app, apiRouter, openRouter){
 
     app.use(bodyParser.urlencoded({extended:true}));
     app.use(bodyParser.json());
-    app.use(express.static(path.join(__dirname, '../public')));
+    app.use(express.static(path.join(__dirname, '../dist')));
     app.use('/api/'+config.version, apiRouter);
 
 
@@ -78,6 +78,10 @@ module.exports = function(app, apiRouter, openRouter){
     app.use(function(err, req, res, next) {
         console.log("ERR",err);
         res.status(err.status || 500).send(err);
+    });
+
+    app.all('/*', function(req, res) {
+        res.sendFile(path.resolve('dist/index.html'));
     });
 
     return app;

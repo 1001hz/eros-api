@@ -17,13 +17,13 @@ module.exports = {
      * @param req
      * @param next
      */
-    create: function(req, next) {
+    create: function(req, res, next) {
 
         validator
             .exists(req, ['email', 'password'])
             .then(function(){
 
-                userService
+                return userService
                     .create(req.body.email, req.body.password)
                     .then(function(user){
                         res.json(user);
@@ -31,6 +31,7 @@ module.exports = {
 
             })
             .catch(function(error){
+                console.log(error);
                 next(error);
             });
 
@@ -48,8 +49,8 @@ module.exports = {
             .exists(req, ['user'])
             .then(function(){
 
-                userService
-                    .update(req.body.user)
+                return userService
+                    .update(req.body.user, req._user._id)
                     .then(function(user){
                         res.json(user);
                     })
@@ -76,7 +77,7 @@ module.exports = {
             .exists(req, ['current', 'new'])
             .then(function(){
 
-                userService
+                return userService
                     .updatePassword(req._user, req.body.current, req.body.new)
                     .then(function(){
                         res.status(200).send({});

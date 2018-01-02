@@ -1,5 +1,11 @@
+if(process.env.MODE == 'dev'){
+    var config = require('./config');
+}
+else {
+    var config = require('./config.deploy');
+}
+
 var express = require('express');
-var config = require('./config');
 var mongoose = require('mongoose');
 
 var port = process.env.PORT||config.port;

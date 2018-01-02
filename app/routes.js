@@ -81,6 +81,17 @@ module.exports = function(router, openRouter){
         .route('/weddings')
         .delete(wedding.remove);
 
+    router
+        .route('/weddings/:weddingId/invitation/:invitationId')
+        .get(function(req, res, next) {
+            res.json(
+                {
+                    "valid":"true",
+                    "invitationId": req.params.invitationId
+                }
+            );
+        });
+
     /**
      * Guests Section
      */

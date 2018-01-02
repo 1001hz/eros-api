@@ -6,7 +6,6 @@ var userService = require('./services/user.js');
 var path = require('path');
 
 module.exports = function(app, apiRouter, openRouter){
-
     app.use(bodyParser.urlencoded({extended:true}));
     app.use(bodyParser.json());
     app.use(express.static(path.join(__dirname, '../dist')));

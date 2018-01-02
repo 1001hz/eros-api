@@ -1,7 +1,10 @@
 {
   "name": "eros-api",
   "main": "server.js",
-  "start": "server.js",
+  "scripts": {
+    "start": "server.js",
+    "postinstall": "npm install"
+  },
   "dependencies": {
     "body-parser": "^1.14.2",
     "express": "^4.13.4",

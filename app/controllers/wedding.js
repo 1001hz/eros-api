@@ -3,6 +3,19 @@ var validator = require('../services/validator');
 
 module.exports = {
 
+
+    getOne: function(req, res, next) {
+
+        weddingService
+            .getWeddingById(req.params.weddingId)
+            .then(function(wedding){
+                res.json(wedding);
+            })
+            .catch(function(error){
+                next(error);
+            });
+    },
+
     getAll: function(req, res, next) {
         weddingService
             .getAllWeddingsForUser(req._user._id)

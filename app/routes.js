@@ -66,6 +66,10 @@ module.exports = function(router, openRouter){
      */
 
     router
+        .route('/wedding/:weddingId')
+        .get(wedding.getOne);
+
+    router
         .route('/weddings')
         .get(wedding.getAll);
 

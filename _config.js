@@ -12,7 +12,11 @@ module.exports = {
     access: {
         port: '4200',
         host: 'http://localhost'
+    },
+    mail: {
+        user: 'weddingelf.ie@gmail.com',
+        pass: 'Hendri**'
     }
 };
 
-SECRET=xcxcxc DATABASE=mongodb://1001hz:Hendri*@ds051720.mlab.com:51720/1001hz APP_VERSION=v1 NAME=MyApp PORT=3001 HOST=http://localhost IMAGE_PATH=./public/uploads/avatars/ IMAGE_WEB_PATH=/uploads/avatars/ TOKEN_EXPIRY_IN_MS=3600000 ACCESS_PORT=4200 ACCESS_HOST=http://localhost
+MAIL_USER=weddingelf.ie@gmail.com MAIL_PASSWORD=Hendri** SECRET=xcxcxc DATABASE=mongodb://1001hz:Hendri*@ds051720.mlab.com:51720/1001hz APP_VERSION=v1 NAME=MyApp PORT=3001 HOST=http://localhost IMAGE_PATH=./public/uploads/avatars/ IMAGE_WEB_PATH=/uploads/avatars/ TOKEN_EXPIRY_IN_MS=3600000 ACCESS_PORT=4200 ACCESS_HOST=http://localhost

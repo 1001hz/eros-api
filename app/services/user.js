@@ -2,6 +2,7 @@ var crypto = require('crypto');
 var multer = require('multer');
 var User = require('../models/user');
 var config = require('../../config');
+var mailerService = require('../services/mailer');
 
 module.exports = {
 
@@ -209,8 +210,12 @@ module.exports = {
                         var token = aUser.generateResetPasswordToken();
                         aUser.save();
 
-                        //TODO: Send email, remove token from message below
-                        resolve({message: "An email has been sent with a reset link to your email address."+token});
+                        var link = config.host + ':' + config.port + '/auth/reset-password/' + token;
+                        var message = "To reset your password click " + link;
+                        var subject = "Wedding Elf 👰 Password Reset";
+
+                        mailerService.send(enteredEmail, subject, message);
+                        resolve({message: "An email has been sent with a reset link to your email address."});
 
                     }
                     else {

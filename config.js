@@ -11,5 +11,9 @@ module.exports = {
     access: {
         port: process.env.ACCESS_PORT,
         host: process.env.ACCESS_HOST
+    },
+    mail: {
+        user: process.env.MAIL_USER,
+        password: process.env.MAIL_PASSWORD
     }
 };
